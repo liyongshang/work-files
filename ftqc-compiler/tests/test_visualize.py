@@ -11,7 +11,7 @@ from ftqc_patch_rotation.visualize import draw_schedule
 
 def test_gate_shapes_labels_and_clearance(tmp_path, monkeypatch):
     schedule = tuple(ScheduledOperation(kind, (0,)) for kind in
-                     ("h", "z", "folding", "icz", "s", "unfolding"))
+                     ("h", "z", "folding", "icz", "s", "unfolding", "reset"))
     schedule += (ScheduledOperation("cz", (0, 1)),)
     monkeypatch.setattr(plt, "close", lambda *args: None)
     try:
@@ -21,8 +21,9 @@ def test_gate_shapes_labels_and_clearance(tmp_path, monkeypatch):
         ax = fig.axes[0]
         boxes = [patch for patch in ax.patches if isinstance(patch, Rectangle)]
         labels = [text for text in ax.texts if text.get_text() in
-                  {"H", "Z", "Fold", "iCZ", "S", "Unfold"}]
-        assert len(boxes) == len(labels) == 6
+                  {"H", "Z", "Fold", "iCZ", "S", "Unfold", "reset"}]
+        assert len(boxes) == len(labels) == 7
+        assert "|0>" not in [text.get_text() for text in ax.texts]
         assert "CZ" not in [text.get_text() for text in ax.texts]
         assert len([p for p in ax.patches if isinstance(p, Circle)]) == 2
         previous = None

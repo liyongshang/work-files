@@ -12,7 +12,7 @@ from .compiler import CompiledCircuit
 
 def _gate_label(kind: str) -> str:
     return {
-        "rot": "R", "reset": "|0>", "sdg": "S†",
+        "rot": "R", "reset": "reset", "sdg": "S†",
         "folding": "Fold", "unfolding": "Unfold", "icz": "iCZ",
     }.get(kind, kind.upper())
 

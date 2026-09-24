@@ -1,0 +1,790 @@
+{
+  "processor": {
+    "config": {
+      "d": 3,
+      "a1": 2,
+      "b1": 2,
+      "a2": 1,
+      "b2": 1,
+      "s": 5.0,
+      "pair_pitch_x": null,
+      "pair_pitch_y": null,
+      "pair_offset": null,
+      "gap_se": null,
+      "gap_em": null,
+      "L": null,
+      "H": null,
+      "site_grid_size": 5
+    },
+    "L": "45",
+    "H": "150",
+    "patches": [
+      {
+        "id": "storage:0:0",
+        "zone": "storage",
+        "row": 0,
+        "col": 0,
+        "x": "0",
+        "y": "0",
+        "pair": null,
+        "member": null
+      },
+      {
+        "id": "storage:0:1",
+        "zone": "storage",
+        "row": 0,
+        "col": 1,
+        "x": "25",
+        "y": "0",
+        "pair": null,
+        "member": null
+      },
+      {
+        "id": "storage:1:0",
+        "zone": "storage",
+        "row": 1,
+        "col": 0,
+        "x": "0",
+        "y": "25",
+        "pair": null,
+        "member": null
+      },
+      {
+        "id": "storage:1:1",
+        "zone": "storage",
+        "row": 1,
+        "col": 1,
+        "x": "25",
+        "y": "25",
+        "pair": null,
+        "member": null
+      },
+      {
+        "id": "measurement:0:0",
+        "zone": "measurement",
+        "row": 0,
+        "col": 0,
+        "x": "0",
+        "y": "105",
+        "pair": null,
+        "member": null
+      },
+      {
+        "id": "measurement:0:1",
+        "zone": "measurement",
+        "row": 0,
+        "col": 1,
+        "x": "25",
+        "y": "105",
+        "pair": null,
+        "member": null
+      },
+      {
+        "id": "measurement:1:0",
+        "zone": "measurement",
+        "row": 1,
+        "col": 0,
+        "x": "0",
+        "y": "130",
+        "pair": null,
+        "member": null
+      },
+      {
+        "id": "measurement:1:1",
+        "zone": "measurement",
+        "row": 1,
+        "col": 1,
+        "x": "25",
+        "y": "130",
+        "pair": null,
+        "member": null
+      },
+      {
+        "id": "entanglement:0:0:0",
+        "zone": "entanglement",
+        "row": 0,
+        "col": 0,
+        "x": "0",
+        "y": "55",
+        "pair": "pair:0:0",
+        "member": 0
+      },
+      {
+        "id": "entanglement:0:0:1",
+        "zone": "entanglement",
+        "row": 0,
+        "col": 1,
+        "x": "1",
+        "y": "55",
+        "pair": "pair:0:0",
+        "member": 1
+      }
+    ]
+  },
+  "program": {
+    "schema": "ftqc.se-motion.v1",
+    "distance": 3,
+    "swap_directions": [
+      "D"
+    ],
+    "initial": {
+      "data_patch": "entanglement:0:0:0",
+      "ancilla_patch": "entanglement:0:0:1",
+      "atoms": [
+        {
+          "id": "D1_1",
+          "role": "D",
+          "x": "0",
+          "y": "55"
+        },
+        {
+          "id": "D1_3",
+          "role": "D",
+          "x": "20",
+          "y": "55"
+        },
+        {
+          "id": "D1_5",
+          "role": "D",
+          "x": "40",
+          "y": "55"
+        },
+        {
+          "id": "D2_2",
+          "role": "D",
+          "x": "10",
+          "y": "65"
+        },
+        {
+          "id": "D2_4",
+          "role": "D",
+          "x": "30",
+          "y": "65"
+        },
+        {
+          "id": "D3_1",
+          "role": "D",
+          "x": "0",
+          "y": "75"
+        },
+        {
+          "id": "D3_3",
+          "role": "D",
+          "x": "20",
+          "y": "75"
+        },
+        {
+          "id": "D3_5",
+          "role": "D",
+          "x": "40",
+          "y": "75"
+        },
+        {
+          "id": "D4_2",
+          "role": "D",
+          "x": "10",
+          "y": "85"
+        },
+        {
+          "id": "D4_4",
+          "role": "D",
+          "x": "30",
+          "y": "85"
+        },
+        {
+          "id": "D5_1",
+          "role": "D",
+          "x": "0",
+          "y": "95"
+        },
+        {
+          "id": "D5_3",
+          "role": "D",
+          "x": "20",
+          "y": "95"
+        },
+        {
+          "id": "D5_5",
+          "role": "D",
+          "x": "40",
+          "y": "95"
+        },
+        {
+          "id": "A1_2",
+          "role": "A",
+          "x": "11",
+          "y": "55"
+        },
+        {
+          "id": "A1_4",
+          "role": "A",
+          "x": "31",
+          "y": "55"
+        },
+        {
+          "id": "A2_1",
+          "role": "A",
+          "x": "1",
+          "y": "65"
+        },
+        {
+          "id": "A2_3",
+          "role": "A",
+          "x": "21",
+          "y": "65"
+        },
+        {
+          "id": "A2_5",
+          "role": "A",
+          "x": "41",
+          "y": "65"
+        },
+        {
+          "id": "A3_2",
+          "role": "A",
+          "x": "11",
+          "y": "75"
+        },
+        {
+          "id": "A3_4",
+          "role": "A",
+          "x": "31",
+          "y": "75"
+        },
+        {
+          "id": "A4_1",
+          "role": "A",
+          "x": "1",
+          "y": "85"
+        },
+        {
+          "id": "A4_3",
+          "role": "A",
+          "x": "21",
+          "y": "85"
+        },
+        {
+          "id": "A4_5",
+          "role": "A",
+          "x": "41",
+          "y": "85"
+        },
+        {
+          "id": "A5_2",
+          "role": "A",
+          "x": "11",
+          "y": "95"
+        },
+        {
+          "id": "A5_4",
+          "role": "A",
+          "x": "31",
+          "y": "95"
+        }
+      ]
+    },
+    "instructions": [
+      {
+        "kind": "aod",
+        "direction": "L",
+        "name": "approach",
+        "atoms": [
+          "A1_2",
+          "A1_4",
+          "A2_3",
+          "A2_5",
+          "A3_2",
+          "A3_4",
+          "A4_3",
+          "A4_5",
+          "A5_2",
+          "A5_4"
+        ],
+        "delta": [
+          "-10",
+          "0"
+        ],
+        "pairs": []
+      },
+      {
+        "kind": "entangle",
+        "direction": "L",
+        "name": "entangle",
+        "atoms": [],
+        "delta": [
+          "0",
+          "0"
+        ],
+        "pairs": [
+          [
+            "D1_1",
+            "A1_2"
+          ],
+          [
+            "D1_3",
+            "A1_4"
+          ],
+          [
+            "D2_2",
+            "A2_3"
+          ],
+          [
+            "D2_4",
+            "A2_5"
+          ],
+          [
+            "D3_1",
+            "A3_2"
+          ],
+          [
+            "D3_3",
+            "A3_4"
+          ],
+          [
+            "D4_2",
+            "A4_3"
+          ],
+          [
+            "D4_4",
+            "A4_5"
+          ],
+          [
+            "D5_1",
+            "A5_2"
+          ],
+          [
+            "D5_3",
+            "A5_4"
+          ]
+        ]
+      },
+      {
+        "kind": "aod",
+        "direction": "L",
+        "name": "restore_far_strips",
+        "atoms": [
+          "A1_4",
+          "A2_3",
+          "A2_5",
+          "A3_4",
+          "A4_3",
+          "A4_5",
+          "A5_4"
+        ],
+        "delta": [
+          "10",
+          "0"
+        ],
+        "pairs": []
+      },
+      {
+        "kind": "aod",
+        "direction": "L",
+        "name": "restore_near_strip",
+        "atoms": [
+          "A1_2",
+          "A3_2",
+          "A5_2"
+        ],
+        "delta": [
+          "10",
+          "0"
+        ],
+        "pairs": []
+      },
+      {
+        "kind": "aod",
+        "direction": "R",
+        "name": "approach",
+        "atoms": [
+          "A1_2",
+          "A1_4",
+          "A2_1",
+          "A2_3",
+          "A3_2",
+          "A3_4",
+          "A4_1",
+          "A4_3",
+          "A5_2",
+          "A5_4"
+        ],
+        "delta": [
+          "10",
+          "0"
+        ],
+        "pairs": []
+      },
+      {
+        "kind": "entangle",
+        "direction": "R",
+        "name": "entangle",
+        "atoms": [],
+        "delta": [
+          "0",
+          "0"
+        ],
+        "pairs": [
+          [
+            "D1_3",
+            "A1_2"
+          ],
+          [
+            "D1_5",
+            "A1_4"
+          ],
+          [
+            "D2_2",
+            "A2_1"
+          ],
+          [
+            "D2_4",
+            "A2_3"
+          ],
+          [
+            "D3_3",
+            "A3_2"
+          ],
+          [
+            "D3_5",
+            "A3_4"
+          ],
+          [
+            "D4_2",
+            "A4_1"
+          ],
+          [
+            "D4_4",
+            "A4_3"
+          ],
+          [
+            "D5_3",
+            "A5_2"
+          ],
+          [
+            "D5_5",
+            "A5_4"
+          ]
+        ]
+      },
+      {
+        "kind": "aod",
+        "direction": "R",
+        "name": "restore_far_strips",
+        "atoms": [
+          "A1_2",
+          "A2_1",
+          "A2_3",
+          "A3_2",
+          "A4_1",
+          "A4_3",
+          "A5_2"
+        ],
+        "delta": [
+          "-10",
+          "0"
+        ],
+        "pairs": []
+      },
+      {
+        "kind": "aod",
+        "direction": "R",
+        "name": "restore_near_strip",
+        "atoms": [
+          "A1_4",
+          "A3_4",
+          "A5_4"
+        ],
+        "delta": [
+          "-10",
+          "0"
+        ],
+        "pairs": []
+      },
+      {
+        "kind": "aod",
+        "direction": "U",
+        "name": "approach",
+        "atoms": [
+          "A2_1",
+          "A2_3",
+          "A2_5",
+          "A3_2",
+          "A3_4",
+          "A4_1",
+          "A4_3",
+          "A4_5",
+          "A5_2",
+          "A5_4"
+        ],
+        "delta": [
+          "0",
+          "-10"
+        ],
+        "pairs": []
+      },
+      {
+        "kind": "entangle",
+        "direction": "U",
+        "name": "entangle",
+        "atoms": [],
+        "delta": [
+          "0",
+          "0"
+        ],
+        "pairs": [
+          [
+            "D1_1",
+            "A2_1"
+          ],
+          [
+            "D1_3",
+            "A2_3"
+          ],
+          [
+            "D1_5",
+            "A2_5"
+          ],
+          [
+            "D2_2",
+            "A3_2"
+          ],
+          [
+            "D2_4",
+            "A3_4"
+          ],
+          [
+            "D3_1",
+            "A4_1"
+          ],
+          [
+            "D3_3",
+            "A4_3"
+          ],
+          [
+            "D3_5",
+            "A4_5"
+          ],
+          [
+            "D4_2",
+            "A5_2"
+          ],
+          [
+            "D4_4",
+            "A5_4"
+          ]
+        ]
+      },
+      {
+        "kind": "aod",
+        "direction": "U",
+        "name": "restore_far_strips",
+        "atoms": [
+          "A3_2",
+          "A3_4",
+          "A4_1",
+          "A4_3",
+          "A4_5",
+          "A5_2",
+          "A5_4"
+        ],
+        "delta": [
+          "0",
+          "10"
+        ],
+        "pairs": []
+      },
+      {
+        "kind": "aod",
+        "direction": "U",
+        "name": "restore_near_strip",
+        "atoms": [
+          "A2_1",
+          "A2_3",
+          "A2_5"
+        ],
+        "delta": [
+          "0",
+          "10"
+        ],
+        "pairs": []
+      },
+      {
+        "kind": "aod",
+        "direction": "D",
+        "name": "approach",
+        "atoms": [
+          "A1_2",
+          "A1_4",
+          "A2_1",
+          "A2_3",
+          "A2_5",
+          "A3_2",
+          "A3_4",
+          "A4_1",
+          "A4_3",
+          "A4_5"
+        ],
+        "delta": [
+          "0",
+          "10"
+        ],
+        "pairs": []
+      },
+      {
+        "kind": "entangle",
+        "direction": "D",
+        "name": "entangle",
+        "atoms": [],
+        "delta": [
+          "0",
+          "0"
+        ],
+        "pairs": [
+          [
+            "D2_2",
+            "A1_2"
+          ],
+          [
+            "D2_4",
+            "A1_4"
+          ],
+          [
+            "D3_1",
+            "A2_1"
+          ],
+          [
+            "D3_3",
+            "A2_3"
+          ],
+          [
+            "D3_5",
+            "A2_5"
+          ],
+          [
+            "D4_2",
+            "A3_2"
+          ],
+          [
+            "D4_4",
+            "A3_4"
+          ],
+          [
+            "D5_1",
+            "A4_1"
+          ],
+          [
+            "D5_3",
+            "A4_3"
+          ],
+          [
+            "D5_5",
+            "A4_5"
+          ]
+        ]
+      },
+      {
+        "kind": "roles",
+        "direction": "D",
+        "name": "exchange_roles_and_homes",
+        "atoms": [],
+        "delta": [
+          "0",
+          "0"
+        ],
+        "pairs": [
+          [
+            "D2_2",
+            "A1_2"
+          ],
+          [
+            "D2_4",
+            "A1_4"
+          ],
+          [
+            "D3_1",
+            "A2_1"
+          ],
+          [
+            "D3_3",
+            "A2_3"
+          ],
+          [
+            "D3_5",
+            "A2_5"
+          ],
+          [
+            "D4_2",
+            "A3_2"
+          ],
+          [
+            "D4_4",
+            "A3_4"
+          ],
+          [
+            "D5_1",
+            "A4_1"
+          ],
+          [
+            "D5_3",
+            "A4_3"
+          ],
+          [
+            "D5_5",
+            "A4_5"
+          ]
+        ]
+      },
+      {
+        "kind": "aod",
+        "direction": "D",
+        "name": "restore_paired_old_D",
+        "atoms": [
+          "D2_2",
+          "D2_4",
+          "D3_1",
+          "D3_3",
+          "D3_5",
+          "D4_2",
+          "D4_4",
+          "D5_1",
+          "D5_3",
+          "D5_5"
+        ],
+        "delta": [
+          "0",
+          "-10"
+        ],
+        "pairs": []
+      },
+      {
+        "kind": "aod",
+        "direction": "D",
+        "name": "transfer_boundary_old_D",
+        "atoms": [
+          "D1_1",
+          "D1_3",
+          "D1_5"
+        ],
+        "delta": [
+          "1",
+          "0"
+        ],
+        "pairs": []
+      },
+      {
+        "kind": "aod",
+        "direction": "D",
+        "name": "transfer_boundary_old_A",
+        "atoms": [
+          "A5_2",
+          "A5_4"
+        ],
+        "delta": [
+          "-1",
+          "0"
+        ],
+        "pairs": []
+      }
+    ]
+  }
+}

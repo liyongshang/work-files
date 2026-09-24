@@ -1,0 +1,13 @@
+{
+  "distance": 3,
+  "site_grid_size": 5,
+  "data_atoms": 13,
+  "ancilla_atoms": 12,
+  "aod_stages": 13,
+  "entangling_batches": 4,
+  "entangling_pairs": 40,
+  "replay_frames": 19,
+  "final_data_patch": "entanglement:0:0:1",
+  "final_ancilla_patch": "entanglement:0:0:0",
+  "replay_valid": true
+}

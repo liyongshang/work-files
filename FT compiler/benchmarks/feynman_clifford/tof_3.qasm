@@ -1,0 +1,59 @@
+OPENQASM 2.0;
+include "qelib1.inc";
+qreg qubits[5];
+qreg cczreg[3]; // CCZReg[3]
+qreg treg[1]; // TReg[1]
+creg cczmeas[3];
+creg tmeas[1];
+h qubits[4];
+h qubits[4];
+h qubits[4];
+// CCZ injection; sampled CCZReg measurement = 011
+cx qubits[0],cczreg[0];
+cx qubits[1],cczreg[1];
+cx qubits[4],cczreg[2];
+measure cczreg -> cczmeas;
+cz qubits[0],qubits[1];
+cz qubits[0],qubits[4];
+z qubits[0];
+reset cczreg[0];
+reset cczreg[1];
+reset cczreg[2];
+h qubits[4];
+h qubits[4];
+h qubits[4];
+h qubits[3];
+h qubits[3];
+h qubits[3];
+// CCZ injection; sampled CCZReg measurement = 111
+cx qubits[2],cczreg[0];
+cx qubits[4],cczreg[1];
+cx qubits[3],cczreg[2];
+measure cczreg -> cczmeas;
+cz qubits[2],qubits[3];
+cz qubits[2],qubits[4];
+cz qubits[3],qubits[4];
+z qubits[2];
+z qubits[3];
+z qubits[4];
+reset cczreg[0];
+reset cczreg[1];
+reset cczreg[2];
+h qubits[3];
+h qubits[3];
+h qubits[3];
+h qubits[4];
+h qubits[4];
+h qubits[4];
+// CCZ injection; sampled CCZReg measurement = 100
+cx qubits[0],cczreg[0];
+cx qubits[1],cczreg[1];
+cx qubits[4],cczreg[2];
+measure cczreg -> cczmeas;
+cz qubits[1],qubits[4];
+reset cczreg[0];
+reset cczreg[1];
+reset cczreg[2];
+h qubits[4];
+h qubits[4];
+h qubits[4];

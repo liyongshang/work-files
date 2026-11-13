@@ -1,0 +1,3 @@
+[console_scripts]
+ftqc-experiment = ftqc_patch_rotation.experiments.random:main
+ftqc-feynman = ftqc_patch_rotation.experiments.feynman:main

@@ -1,0 +1,5 @@
+{
+  "input": "benchmarks/feynman_clifford",
+  "stats": "benchmarks/feynman_clifford_stats.json",
+  "timeout": 120.0
+}

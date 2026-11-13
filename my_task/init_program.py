@@ -1,8 +1,14 @@
+"""FT compiler's original cascading-CZ greedy seed (2026-11-12).
+
+Source: ftqc_patch_rotation/passes/patch_rotation/greedy.py.
+The implementation below is copied without changing the greedy algorithm.
+"""
 from __future__ import annotations
 
-from .model import PreparedCircuit
+from ftqc_patch_rotation.ir.rotation import PreparedCircuit
 
 
+# EVOLVE-BLOCK-START
 def greedy_optimize(circuit: PreparedCircuit) -> tuple[int, ...]:
     """Incrementally flip the qubit incident on most blocked front CZs."""
     nodes = circuit.cz_nodes
@@ -188,3 +194,10 @@ def greedy_optimize(circuit: PreparedCircuit) -> tuple[int, ...]:
             raise RuntimeError("greedy optimizer failed to enable a front-layer CZ")
 
     return tuple(rotations)
+
+# EVOLVE-BLOCK-END
+
+
+def run_code(circuit: PreparedCircuit):
+    """Return the extra patch-rotation sequence for this prepared circuit."""
+    return greedy_optimize(circuit)

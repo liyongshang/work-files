@@ -1,0 +1,145 @@
+Design a general heuristic for the FT compiler's surface-code ZX boundary
+pairing / extra patch-rotation optimization problem. Minimize the number of
+additional ROT operations needed to execute the entire given logical circuit.
+
+Do this by evolving the code between # EVOLVE-BLOCK-START and # EVOLVE-BLOCK-END.
+Return one Python code block containing both marker lines. Preserve the function
+greedy_optimize(circuit); the fixed run_code(circuit) wrapper calls it. The seed
+is the complete original greedy implementation from FT compiler, not a wrapper
+that delegates to a hidden optimizer.
+
+PROBLEM AND SEMANTICS
+
+Each logical qubit is one surface-code block with one of two ZX orientations.
+A transversal CZ can execute only when its endpoints have opposite effective
+orientations. The compiler already accounts for all original H gates, original
+ROT gates, and reset/prepare_t operations when it prepares the input. You must
+choose only the EXTRA block flips. One returned qubit ID inserts one extra ROT
+on that block, with unit cost. Initial orientations are fixed. Do not choose
+free initial orientations. Final orientations need not equal the initial ones;
+there is no extra final-restoration cost. Original H gates are not scored as
+extra ROT operations.
+
+The input is the actual ftqc_patch_rotation.ir.rotation.PreparedCircuit:
+
+* circuit.num_qubits: number of logical blocks; valid IDs are 0..n-1.
+* circuit.g1: NetworkX DiGraph retaining ALL original logical operations and
+  their dependency barriers. Nodes are integers, not necessarily consecutive.
+* circuit.g2: NetworkX DiGraph containing only CZ nodes, with dependencies
+  projected from G1 through the non-CZ operations.
+* circuit.cz_nodes: CZ node IDs in topological order; may be empty.
+* circuit.gate(node_id): a frozen GateNode with id, kind, qubits,
+  is_executable, and reset_epochs. CZ gates have two distinct operands.
+* circuit.initial_cz_states(): dict[node_id, bool]. True means that CZ is
+  orientation-compatible before adding any EXTRA flips. This already includes
+  the effects of original H/ROT gates and resets, even for future CZ nodes.
+
+Use G2 as the optimization state. At the beginning, drain all executable front
+CZ nodes to closure. A front node has no remaining predecessor. After each
+returned ROT, again drain all executable front nodes to closure. Ready CZ nodes
+may be executed in any topologically valid order. Blocked nodes cannot execute.
+
+For endpoint q, the reset epoch of a CZ is gate.reset_epochs[operand], or zero
+if reset_epochs is empty. A flip on q toggles compatibility ONLY for remaining
+CZ nodes incident on q in q's CURRENT epoch: the smallest epoch among q's
+remaining CZ incidences. It never propagates across the next reset/prepare_t.
+A flip on a block with no remaining incident CZ has no benefit but still costs
+one ROT. When both endpoints are flipped in their respective epochs, the two
+toggles cancel for that CZ. Never replace reset-aware state with a single
+global orientation bit per qubit for the whole circuit.
+
+G2 feasibility is necessary but not sufficient: the evaluator also replays the
+rotation sequence against full G1 using FT compiler's build_schedule(). Retained
+non-CZ dependency barriers, including resets, must remain executable. A sequence
+that completes G2 but cannot complete G1 is INVALID.
+
+INTERFACE
+
+def greedy_optimize(circuit: PreparedCircuit) -> tuple[int, ...]:
+    # Return ordered logical-qubit IDs to rotate.
+    ...
+
+The fixed run_code(circuit) wrapper returns this result. Lists and finite
+iterables of integer IDs are accepted as well. Return no metrics, orientation
+assignments, schedules, gate IDs, dictionaries, or self-reported scores.
+An empty sequence is correct if no extra flips are needed. Bool/float IDs,
+out-of-range IDs, incomplete solutions, exceptions, timeouts, and memory-limit
+failures are invalid. Every submitted ROT is charged, including redundant or
+trailing flips. The output length is capped at 2 * number_of_CZ + n + 1 to
+reject unbounded iterators. Good solutions do not need that many flips.
+
+SEED AND SEARCH DIRECTIONS
+
+The original greedy seed repeatedly chooses an endpoint of a blocked front CZ.
+It estimates how many CZs would execute in the cascading closure after flipping
+each candidate, picks maximal cascade size, and breaks ties by smaller qubit ID.
+It maintains front/remaining sets and per-epoch incidence incrementally.
+
+You may improve tie-breaking, look ahead, use beam search, bounded randomized
+restarts, adaptive scoring, local search, or hybrid heuristics. Keep the seed's
+reset-aware behavior. Avoid copying the complete graph for every small trial
+when an incremental representation or local deltas suffice. Return a valid
+general solution for any input within the supported interface, not stored
+answers to the evaluation instances.
+
+EVALUATION AND OBJECTIVE
+
+The default "small/search" suite has 18 fixed instances:
+* Six already-converted static Clifford Feynman QASM traces (including resets).
+* Twelve circuits produced by FT compiler's random_layered_clifford_circuit:
+  (qubits, layers) = (4,16), (8,32), (12,64), (20,96), each with three fixed seeds.
+
+Let R be the SUM of submitted extra ROT counts over ALL instances, and G the
+sum for the original greedy algorithm on exactly the same instances. The score
+is (1 + G) / (1 + R). Higher is better, the original greedy seed scores 1,
+and any decrease in total ROT count strictly improves the score. This is a
+monotone transformation of total flips, NOT an average of per-case ratios.
+Runtime is constrained but is not part of the score. No case may be skipped;
+one invalid case makes the entire evaluation score 0. The trusted evaluator
+recomputes counts from the returned sequences and independently validates them.
+
+A separate validation split uses different Feynman traces and random seeds;
+do not optimize by recognizing the public search cases or reading their files.
+Scores from different suites/splits must not be compared. The evaluator can
+also be configured for the full Feynman set or caller-supplied QASM inputs.
+
+RESOURCE LIMITS AND ALLOWED DEPENDENCIES
+
+Default candidate subprocess budget: 60 seconds for module import and solving
+the WHOLE suite. Default complete evaluator budget: 90 seconds including input
+preparation, original greedy baseline, and trusted validation. The SimpleTES
+outer --eval-timeout should be 120 seconds or greater. Worker memory cap is
+2048 MiB. BLAS/OpenMP threads are capped at one. Random and NumPy seeds are
+reset to zero before each instance; make any additional RNG seeds explicit.
+
+Available: Python 3.11+ standard library, numpy, networkx, and FT compiler's
+PreparedCircuit/GateNode data types. Use in-memory graph/data algorithms.
+Do not call the project's greedy/trivial/SAT/window-SAT optimizer functions,
+Z3 or another external solver, an LLM/network service, or shell/subprocesses.
+The goal is to evolve the heuristic itself. Do not read benchmark/evaluator
+files, inspect case names, change input graphs to evade constraints, monkey
+patch compiler/evaluator code, or access the filesystem. Add algorithm imports
+inside the evolved block. You may build private working copies in memory;
+mutating an input copy cannot change the trusted validation input.
+
+LOCAL SETUP (for the human running SimpleTES)
+
+The evaluator uses FT_COMPILER_ROOT to locate the original compiler source and
+benchmarks. Its default detects work/AI/SimpleTES next to work/naqc/FT compiler.
+On another machine, set FT_COMPILER_ROOT explicitly to the compiler repo root.
+The evaluation interpreter needs that project's dependencies (qiskit, networkx,
+z3-solver, numpy, matplotlib), because the compiler package imports them.
+The supplied FT compiler/.venv may be passed to SimpleTES with --eval-venv.
+No model API is needed to check the seed locally:
+
+python datasets/ft_compiler/my_task/evaluator.py datasets/ft_compiler/my_task/init_program.py
+
+Optional environment variables:
+* FT_ZX_SUITE=small | feynman_all | qasm (default small).
+* FT_ZX_SPLIT=search | validation (default search; disjoint small-suite inputs).
+* FT_ZX_QASM_PATH=an absolute QASM file or directory (required for suite=qasm).
+* FT_ZX_SOLVER_TIMEOUT_SECONDS=60; EVALUATOR_TIMEOUT_SECONDS=90.
+* FT_ZX_MEMORY_LIMIT_MB=2048.
+
+Changing a resource limit or suite requires matching this problem statement
+and the SimpleTES outer timeout for a comparable, reproducible search.
